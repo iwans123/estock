@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,9 +29,9 @@ class OrderController extends Controller
 
         // dd(Stock::searchByPositionAndItemName($positionId, $searchItem)->first());
         return view('order.index', [
-            "data" => Stock::searchByPositionAndItemName($positionId, $search)->where('status', 'aktif')->get(),
+            "data" => Stock::searchByPositionAndItemName($positionId, $search)->where('status', 'aktif')->paginate(10),
             "stock" => Stock::searchByPositionAndItemName($positionId, $searchItem)->first(),
-            "orders" => Order::search($searchOrder)->get(),
+            "orders" => Order::search($searchOrder)->whereDate('created_at', Carbon::today())->latest()->paginate(10),
 
         ]);
     }
@@ -49,7 +50,7 @@ class OrderController extends Controller
 
         if ($stock->status == 'nonaktif') {
             flash('Data Tidak bisa dimasukkan')->error();
-        } elseif ($stock->stock <= -1) {
+        } elseif ($stock->stock <= 0) {
             flash('Data Tidak bisa dimasukkan')->error();
         } else {
             // save order

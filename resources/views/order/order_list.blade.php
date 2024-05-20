@@ -4,7 +4,7 @@
 
     <div class="card-body">
         <div class="mb-3 row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 {!! Form::open(['route' => 'order.index', 'method' => 'GET']) !!}
 
                 <div class="form-group">
@@ -18,7 +18,7 @@
                 </div>
                 {!! Form::close() !!}
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 {!! Form::open(['route' => 'order.store', 'class' => 'row']) !!}
                 @if (request('search_item') != '')
                     {!! Form::text('id', $stock->id, [
@@ -28,6 +28,13 @@
                     <div class="form-group col">
                         {!! Form::label('nama_barang', 'Nama Barang:', ['class' => 'mr-2']) !!}
                         {!! Form::text('nama_barang', $stock->item->name, [
+                            'class' => 'form-control',
+                            'disabled' => true,
+                        ]) !!}
+                    </div>
+                    <div class="form-group col">
+                        {!! Form::label('stock', 'Stock Barang:', ['class' => 'mr-2']) !!}
+                        {!! Form::text('stock', $stock->stock, [
                             'class' => 'form-control',
                             'disabled' => true,
                         ]) !!}
@@ -43,6 +50,13 @@
                     <div class="form-group col">
                         {!! Form::label('nama_barang', 'Nama Barang:', ['class' => 'mr-2']) !!}
                         {!! Form::text('nama_barang', null, [
+                            'class' => 'form-control',
+                            'disabled' => true,
+                        ]) !!}
+                    </div>
+                    <div class="form-group col">
+                        {!! Form::label('stock', 'Stock Barang:', ['class' => 'mr-2']) !!}
+                        {!! Form::text('stock', null, [
                             'class' => 'form-control',
                             'disabled' => true,
                         ]) !!}
@@ -89,6 +103,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Waktu</th>
                     <th scope="col">Kode</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Nomor Part</th>
@@ -105,6 +120,7 @@
                 @foreach ($orders as $order)
                     <tr>
                         <th scope="row">{{ $counter++ }}</th>
+                        <td>{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</td>
                         <td>{{ $order->stock->item->code }}</td>
                         <td>{{ $order->stock->item->name }}</td>
                         <td>{{ $order->stock->item->part_number }}</td>
@@ -124,5 +140,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div>
+            {{ $orders->links() }}
+        </div>
     </div>
 </div>

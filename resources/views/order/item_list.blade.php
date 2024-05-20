@@ -41,7 +41,7 @@
                                     'hidden' => true,
                                 ]) !!}
                             </div>
-                            {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit('Tambah', ['class' => 'btn btn-primary']) !!}
                             {!! Form::close() !!}
                         </td>
                     </tr>
