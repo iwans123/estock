@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,12 +13,19 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        $totalMonth = Order::whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->sum('total_price');
+        $totalToday = Order::whereDate('created_at', Carbon::today())->sum('total_price');
+        return view('dashboard', compact('totalToday', 'totalMonth'));
     }
 
     public function chart()
     {
-        $orders = Order::selectRaw('DATE(created_at) as date, SUM(total_price) as totals')->groupBy('date')->get();
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $orders = Order::selectRaw('DATE(created_at) as date, SUM(total_price) as totals')->groupBy('date')->whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->get();
 
         // dd($orders);
         // $formattedOrders = $orders->map(function ($order) {
