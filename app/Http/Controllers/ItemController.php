@@ -39,7 +39,7 @@ class ItemController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
-            'code' => 'required|integer|max:999999|unique:items,code',
+            'code' => 'required|max:6|unique:items,code',
             'name' => 'required|max:255',
             'part_number' => 'nullable|max:255|unique:items,part_number',
             'category_id' => 'required',

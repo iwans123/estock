@@ -16,7 +16,7 @@
 
                     <div class="form-group mb-2">
                         {!! Form::label('code', 'Kode') !!}
-                        {!! Form::number('code', null, ['class' => 'form-control', 'required']) !!}
+                        {!! Form::text('code', null, ['class' => 'form-control', 'required']) !!}
                         <span class="text-danger">{!! $errors->first('code') !!}</span>
                     </div>
 
