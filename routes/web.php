@@ -43,7 +43,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('item', ItemController::class);
+    Route::resource('item', ItemController::class)->middleware('role:admin|toko-1');
     Route::resource('first-shop', FirstShopController::class);
     Route::resource('second-shop', SecondShopController::class);
     Route::resource('warehouse', WarehouseController::class);

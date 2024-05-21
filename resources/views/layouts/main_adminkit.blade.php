@@ -37,17 +37,20 @@
                         Pages
                     </li>
 
-                    <li class="sidebar-item {{ Route::is('dashboard.*') ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('dashboard.index') }}">
-                            <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item {{ Route::is('item.*') ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('item.index') }}">
-                            <i class="align-middle" data-feather="file"></i> <span class="align-middle">Item</span>
-                        </a>
-                    </li>
+                    @hasrole('admin')
+                        <li class="sidebar-item {{ Route::is('dashboard.*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('dashboard.index') }}">
+                                <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+                            </a>
+                        </li>
+                    @endhasrole
+                    @hasrole('admin|toko-1')
+                        <li class="sidebar-item {{ Route::is('item.*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('item.index') }}">
+                                <i class="align-middle" data-feather="file"></i> <span class="align-middle">Item</span>
+                            </a>
+                        </li>
+                    @endhasrole
 
                     <li class="sidebar-item {{ Route::is('first-shop.*') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('first-shop.index') }}">
