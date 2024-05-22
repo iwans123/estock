@@ -23,17 +23,41 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    // LoginRequest
+    public function store(Request $request): RedirectResponse
     {
-        $request->authenticate();
+        // $request->authenticate();
 
-        $request->session()->regenerate();
+        // $request->session()->regenerate();
 
-        if (auth()->user()->hasRole('toko-1|toko-2')) {
-            return redirect()->route('order.index');
+        // if (auth()->user()->hasRole('toko-1|toko-2')) {
+        //     return redirect()->route('order.index');
+        // }
+
+        // return redirect()->intended(RouteServiceProvider::HOME);
+        // dd($request->all());
+        $request->validate([
+            'login' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $credentials = $request->only('login', 'password');
+
+        $fieldType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        if (Auth::attempt([$fieldType => $credentials['login'], 'password' => $credentials['password']], $request->boolean('remember'))) {
+            $request->session()->regenerate();
+
+            // if (auth()->user()->hasRole('toko-1|toko-2')) {
+            //     return redirect()->route('order.index');
+            // }
+
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return back()->withErrors([
+            'login' => __('auth.failed'),
+        ]);
     }
 
     /**
