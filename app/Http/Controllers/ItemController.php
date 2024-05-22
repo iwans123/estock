@@ -79,8 +79,8 @@ class ItemController extends Controller
         $stock_three->stock = '0';
         $stock_three->save();
 
-        flash('Data berhasil disimpan')->success();
-        return back();
+        // flash('Data berhasil disimpan')->success();
+        return back()->with('success', 'Data barang berhasil ditambahkan!');
         // return redirect()->route('item')->with('success', 'Data barang berhasil ditambahkan!');
     }
 
@@ -132,8 +132,8 @@ class ItemController extends Controller
         $item->description = $data['description'];
         $item->save();
 
-        flash('Data berhasil diubah')->success();
-        return back();
+
+        return back()->with('success', 'Data barang berhasil diubah!');
         // Item::find($id)->update($validate);
 
         // return redirect()->route('item')->with('success', 'Data barang berhasil diubah!');

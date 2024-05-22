@@ -20,6 +20,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('adminkit/css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
     {{-- chart --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -308,7 +309,7 @@
 
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-bs-toggle="dropdown">
-                                <span class="text-dark">{{ Auth::user()->name }}</span>
+                                <span class="text-secondary text-uppercase fw-bold">{{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 {{-- <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
@@ -344,7 +345,7 @@
                                         Template</strong></a> &copy;
                             </p>
                         </div>
-                        <div class="col-6 text-end">
+                        {{-- <div class="col-6 text-end">
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
@@ -359,7 +360,7 @@
                                     <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </footer>
@@ -374,7 +375,7 @@
         }, 5000); // Mengatur waktu tampilan pesan kilat dalam 5 detik
     </script> --}}
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Temukan pesan-pesan flash dan tambahkan event listener untuk menyembunyikannya
             var flashMessages = document.querySelectorAll('.alert');
@@ -388,10 +389,17 @@
                 }, 3000);
             });
         });
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src={{ asset('adminkit/js/app.js') }}></script>
-
+    </script> --}}
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src={{ asset('adminkit/js/app.js') }}></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    @if (Session::has('success'))
+
+        toastr.success("{{ Session::get('success') }}", '{{ Auth::user()->name }}')
+        // toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+    @endif
+</script>
 
 </html>
