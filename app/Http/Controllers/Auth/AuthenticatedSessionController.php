@@ -48,9 +48,9 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt([$fieldType => $credentials['login'], 'password' => $credentials['password']], $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            // if (auth()->user()->hasRole('toko-1|toko-2')) {
-            //     return redirect()->route('order.index');
-            // }
+            if (auth()->user()->hasRole('toko-1|toko-2')) {
+                return redirect()->route('order.index');
+            }
 
             return redirect()->intended(RouteServiceProvider::HOME);
         }
