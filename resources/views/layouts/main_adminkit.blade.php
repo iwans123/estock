@@ -21,7 +21,7 @@
     <link href="{{ asset('adminkit/css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- chart --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -30,7 +30,7 @@
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index.html">
+                <a class="sidebar-brand">
                     <span class="align-middle">e-Stock</span>
                 </a>
                 <ul class="sidebar-nav">
@@ -366,30 +366,6 @@
             </footer>
         </div>
     </div>
-    {{-- <script>
-        // Fungsi untuk menyembunyikan pesan kilat setelah beberapa detik
-        setTimeout(function() {
-            document.querySelectorAll('.alert').forEach(function(element) {
-                element.style.display = 'none';
-            });
-        }, 5000); // Mengatur waktu tampilan pesan kilat dalam 5 detik
-    </script> --}}
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Temukan pesan-pesan flash dan tambahkan event listener untuk menyembunyikannya
-            var flashMessages = document.querySelectorAll('.alert');
-            flashMessages.forEach(function(flashMessage) {
-                // Hentikan flash message dengan opacity 0
-                flashMessage.style.transition = 'opacity 4s';
-                flashMessage.style.opacity = '0';
-                // Tunggu 3 detik sebelum menghilangkan pesan
-                setTimeout(function() {
-                    flashMessage.style.display = 'none';
-                }, 3000);
-            });
-        });
-    </script> --}}
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src={{ asset('adminkit/js/app.js') }}></script>
@@ -399,6 +375,9 @@
 
         toastr.success("{{ Session::get('success') }}", '{{ Auth::user()->name }}')
         // toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+    @endif
+    @if (Session::has('error'))
+        toastr.error("{{ Session::get('error') }}")
     @endif
 </script>
 

@@ -37,7 +37,7 @@ class SecondShopController extends Controller
             $stock->position_id = $stock->position_id;
             $stock->status = $request->status;
             $stock->save();
-            flash('Data berhasil dimasukkan')->success();
+            return back()->with('success', 'Stok barang berhasil diubah!');
         } elseif ($request->position == 'TOKO_1' && $stock->stock >= 1) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
@@ -51,7 +51,7 @@ class SecondShopController extends Controller
             $stock_one->position_id = $stock_one->position_id;
             $stock_one->status = $stock_one->status;
             $stock_one->save();
-            flash('Data berhasil dimasukkan')->success();
+            return back()->with('success', 'Stok barang berhasil diubah!');
         } elseif ($request->position == 'GUDANG' && $stock->stock >= 1) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
@@ -65,9 +65,9 @@ class SecondShopController extends Controller
             $stock_three->position_id = $stock_three->position_id;
             $stock_three->status = $stock_three->status;
             $stock_three->save();
-            flash('Data berhasil dimasukkan')->success();
+            return back()->with('success', 'Stok barang berhasil diubah!');
         } else {
-            flash('Data gagal dimasukkan')->error();
+            return back()->with('error', 'Stock gagal dimasukkan!');
         }
         return back();
         // return redirect()->route('first-shop')->with('success', 'Data barang berhasil diubah!');

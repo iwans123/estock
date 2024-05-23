@@ -1,6 +1,6 @@
 <div class="card">
 
-    <div class="card-header">Daftar Item</div>
+    <div class="card-header text-secondary fs-3 fw-bold">List Item</div>
 
     <div class="card-body">
         <div class="mb-3 d-flex justify-content-between">
@@ -15,38 +15,40 @@
                 {!! Form::close() !!}
             </div>
         </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Kode</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $counter = 1;
-                @endphp
-                @foreach ($data as $stock)
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
                     <tr>
-                        <th scope="row">{{ $counter++ }}</th>
-                        <td>{{ $stock->item->code }}</td>
-                        <td>{{ $stock->item->name }}</td>
-                        <td>
-                            {!! Form::open(['route' => 'order.index', 'method' => 'GET']) !!}
-
-                            <div class="form-group">
-                                {!! Form::text('search_item', $stock->item->code, [
-                                    'hidden' => true,
-                                ]) !!}
-                            </div>
-                            {!! Form::submit('Tambah', ['class' => 'btn btn-primary']) !!}
-                            {!! Form::close() !!}
-                        </td>
+                        <th scope="col">#</th>
+                        <th scope="col">Kode</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Aksi</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @php
+                        $counter = 1;
+                    @endphp
+                    @foreach ($data as $stock)
+                        <tr>
+                            <th scope="row">{{ $counter++ }}</th>
+                            <td>{{ $stock->item->code }}</td>
+                            <td>{{ $stock->item->name }}</td>
+                            <td>
+                                {!! Form::open(['route' => 'order.index', 'method' => 'GET']) !!}
+
+                                <div class="form-group">
+                                    {!! Form::text('search_item', $stock->item->code, [
+                                        'hidden' => true,
+                                    ]) !!}
+                                </div>
+                                {!! Form::submit('Tambah', ['class' => 'btn btn-primary']) !!}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

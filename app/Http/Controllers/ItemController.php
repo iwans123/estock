@@ -87,12 +87,12 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $item = Item::find($id);
+    // public function show($id)
+    // {
+    //     $item = Item::find($id);
 
-        return view('items.show-modal', compact('item'));
-    }
+    //     return view('items.show-modal', compact('item'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -111,7 +111,7 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'code' => 'required|integer|unique:items,code,' . $id,
+            'code' => 'required|max:6|unique:items,code,' . $id,
             'name' => 'required|max:255',
             'part_number' => 'nullable|max:255|unique:items,part_number,' . $id,
             'category_id' => 'required',
@@ -147,7 +147,6 @@ class ItemController extends Controller
         Stock::where('item_id', $id)->delete();
         Item::find($id)->delete();
 
-        flash('Data berhasil dihapus')->success();
-        return back();
+        return back()->with('success', 'Data barang berhasil dihapus!');
     }
 }

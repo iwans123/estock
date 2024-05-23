@@ -49,9 +49,9 @@ class OrderController extends Controller
         $stock = Stock::find($data['id']);
 
         if ($stock->status == 'nonaktif') {
-            flash('Data Tidak bisa dimasukkan')->error();
+            return back()->with('error', 'Stock gagal dimasukkan!');
         } elseif ($stock->stock <= 0) {
-            flash('Data Tidak bisa dimasukkan')->error();
+            return back()->with('error', 'Stock gagal dimasukkan!');
         } else {
             // save order
             $order = new Order();
@@ -68,7 +68,7 @@ class OrderController extends Controller
             $stock->save();
         }
 
-        return back();
+        return back()->with('success', 'Stock berhasil dimasukkan!');
     }
 
     /**
@@ -85,6 +85,6 @@ class OrderController extends Controller
         $stock->position_id = $stock->position_id;
         $stock->save();
 
-        return back();
+        return back()->with('success', 'Stock berhasil dihapus!');
     }
 }

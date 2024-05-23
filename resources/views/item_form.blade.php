@@ -15,14 +15,15 @@
                     @endif
 
                     <div class="form-group mb-2">
-                        {!! Form::label('code', 'Kode') !!}
+                        {!! Form::label('code', 'Kode Barang') !!}
                         <span class="text-danger">*</span>
-                        {!! Form::text('code', null, ['class' => 'form-control', 'required']) !!}
+                        {!! Form::text('code', null, ['class' => 'form-control', 'required', 'autofocus']) !!}
                         <span class="text-danger">{!! $errors->first('code') !!}</span>
                     </div>
 
                     <div class="form-group mb-2">
-                        {!! Form::label('name', 'Nama') !!}
+                        {!! Form::label('name', 'Nama Barang') !!}
+                        <span class="text-danger">*</span>
                         {!! Form::text('name', null, ['class' => 'form-control', 'required']) !!}
                         <span class="text-danger">{!! $errors->first('name') !!}</span>
                     </div>
@@ -35,6 +36,7 @@
 
                     <div class="form-group mb-2">
                         {!! Form::label('category_id', 'Kategori') !!}
+                        <span class="text-danger">*</span>
                         {!! Form::select('category_id', $categories->pluck('name', 'id'), null, [
                             'class' => 'form-control',
                             'placeholder' => 'Pilih Kategori',
@@ -50,13 +52,13 @@
                     </div>
 
                     <div class="form-group mb-2">
-                        {!! Form::label('price_first', 'Harga Pertama') !!}
+                        {!! Form::label('price_first', 'Harga 1') !!}
                         {!! Form::number('price_first', null, ['class' => 'form-control']) !!}
                         <span class="text-danger">{!! $errors->first('price_first') !!}</span>
                     </div>
 
                     <div class="form-group mb-2">
-                        {!! Form::label('price_second', 'Harga Kedua') !!}
+                        {!! Form::label('price_second', 'Harga 2') !!}
                         {!! Form::number('price_second', null, ['class' => 'form-control']) !!}
                         <span class="text-danger">{!! $errors->first('price_second') !!}</span>
                     </div>

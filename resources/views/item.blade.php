@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Daftar Item</div>
+                <div class="card-header text-secondary fs-3 fw-bold">List Item</div>
 
                 <div class="card-body">
                     <div class="mb-3 d-flex justify-content-between">
@@ -14,7 +14,12 @@
                         <div class="">
                             {!! Form::open(['route' => 'item.index', 'method' => 'GET']) !!}
                             <div class="input-group">
-                                {!! Form::text('search', request('search'), ['class' => 'form-control', 'placeholder' => 'Cari...']) !!}
+                                {!! Form::text('search', request('search'), [
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Cari...',
+                                    'autofocus' => true,
+                                    'onfocus' => 'this.select()',
+                                ]) !!}
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary">Cari</button>
                                 </div>
@@ -27,8 +32,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Kode</th>
-                                    <th scope="col">Nama</th>
+                                    <th scope="col">Kode Barang</th>
+                                    <th scope="col">Nama Barang</th>
                                     <th scope="col">Nomor Part</th>
                                     <th scope="col">Kategori</th>
                                     <th scope="col">Harga 1</th>
@@ -49,19 +54,28 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->part_number }}</td>
                                         <td>{{ $item->category->name }}</td>
-                                        <td class="text-primary fw-bold">{{ formatRupiah($item->price_first, true) }}</td>
+                                        <td>
+                                            <div>
+                                                <div class="text-primary fw-bold">
+                                                    {{ formatRupiah($item->price_first, true) }}</div>
+                                                <div>L - {{ $item->price_code }}</div>
+                                            </div>
+                                            <span></span>
+                                            <span></span>
+                                        </td>
                                         <td>{{ formatRupiah($item->price_second, true) }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>
-                                            <a href="{{ route('item.edit', $item->id) }}"
-                                                class="btn btn-primary btn-sm">Edit</a>
-                                            <form action="{{ route('item.destroy', $item->id) }}" method="POST"
+                                            <a href="{{ route('item.edit', $item->id) }}" class="btn btn-primary">Edit</a>
+                                            {{-- <form action="{{ route('item.destroy', $item->id) }}" method="POST"
                                                 style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                <button type="submit" class="btn btn-danger"
                                                     onclick="return confirm('Anda yakin ingin menghapus item ini?')">Hapus</button>
-                                            </form>
+                                            </form> --}}
+                                            <button class="btn btn-danger"
+                                                onclick="deletePost({{ $item->id }})">Hapus</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -75,4 +89,22 @@
             </div>
         </div>
     </div>
+    <script>
+        function deletePost(postId) {
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna menekan "Ya, hapus", arahkan ke rute delete
+                    window.location = '/item/delete/' + postId;
+                }
+            });
+        }
+    </script>
 @endsection

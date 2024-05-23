@@ -30,7 +30,6 @@ class FirstShopController extends Controller
         ]);
 
         $stock = Stock::findOrFail($id);
-
         if ($request->status) {
             // save stock
             $stock->item_id = $stock->item_id;
@@ -38,7 +37,9 @@ class FirstShopController extends Controller
             $stock->position_id = $stock->position_id;
             $stock->status = $request->status;
             $stock->save();
-            flash('Data berhasil dimasukkan')->success();
+
+            return back()->with('success', 'Stok barang berhasil diubah!');
+            // flash('Data berhasil dimasukkan')->success();
         } elseif ($request->position == 'TOKO_2' && $stock->stock >= 1) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
@@ -53,7 +54,7 @@ class FirstShopController extends Controller
             $stock_two->status = $stock_two->status;
             $stock_two->save();
 
-            flash('Data berhasil dimasukkan')->success();
+            return back()->with('success', 'Stok barang berhasil ditransfer!');
         } elseif ($request->position == 'GUDANG' && $stock->stock >= 1) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
@@ -68,10 +69,10 @@ class FirstShopController extends Controller
             $stock_three->status = $stock_three->status;
             $stock_three->save();
 
-            flash('Data berhasil dimasukkan')->success();
+            return back()->with('success', 'Stok barang berhasil ditransfer!');
         } else {
-
-            flash('Data gagal dimasukkan')->error();
+            return back()->with('error', 'Stock gagal dimasukkan!');
+            // flash('Data gagal dimasukkan')->error();
         }
         return redirect()->back()->withInput()->withErrors(['quantity' => 'Validation failed!']);
         // return redirect()->route('first-shop')->with('success', 'Data barang berhasil diubah!');

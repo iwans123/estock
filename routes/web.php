@@ -43,12 +43,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('item', ItemController::class)->middleware('role:admin|toko-1');
+    Route::controller(ItemController::class)->prefix('item')->middleware('role:admin|toko-1')->group(function () {
+        Route::get('', 'index')->name('item.index');
+        Route::get('create', 'create')->name('item.create');
+        Route::post('store', 'store')->name('item.store');
+        Route::get('edit/{id}', 'edit')->name('item.edit');
+        Route::post('update/{id}', 'update')->name('item.update');
+        Route::get('delete/{id}', 'destroy')->name('item.destroy');
+    });
     Route::resource('first-shop', FirstShopController::class);
     Route::resource('second-shop', SecondShopController::class);
     Route::resource('warehouse', WarehouseController::class);
-    Route::resource('order', OrderController::class);
-    // Route::get('/order', [OrderController::class, 'add'])->name('order.add');
+    Route::controller(OrderController::class)->prefix('order')->group(function () {
+        Route::get('', 'index')->name('order.index');
+        Route::post('store', 'store')->name('order.store');
+        Route::get('delete/{id}', 'destroy')->name('order.destroy');
+    });
 });
 
 require __DIR__ . '/auth.php';
