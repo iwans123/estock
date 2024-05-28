@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::get('create', 'create')->name('item.create');
         Route::post('store', 'store')->name('item.store');
         Route::get('edit/{id}', 'edit')->name('item.edit');
-        Route::post('update/{id}', 'update')->name('item.update');
+        Route::put('update/{id}', 'update')->name('item.update');
         Route::get('delete/{id}', 'destroy')->name('item.destroy');
     });
     Route::resource('first-shop', FirstShopController::class);
