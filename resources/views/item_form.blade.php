@@ -46,19 +46,20 @@
                     </div>
 
                     <div class="form-group mb-2">
-                        {!! Form::label('price_code', 'Kode Harga') !!}
+                        {!! Form::label('price_code', 'List Harga') !!}
                         {!! Form::text('price_code', null, ['class' => 'form-control']) !!}
                         <span class="text-danger">{!! $errors->first('price_code') !!}</span>
                     </div>
 
                     <div class="form-group mb-2">
-                        {!! Form::label('price_first', 'Harga 1') !!}
-                        {!! Form::number('price_first', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('price_first', 'Harga Jual') !!}
+                        <span class="text-danger">*</span>
+                        {!! Form::number('price_first', null, ['class' => 'form-control', 'required']) !!}
                         <span class="text-danger">{!! $errors->first('price_first') !!}</span>
                     </div>
 
                     <div class="form-group mb-2">
-                        {!! Form::label('price_second', 'Harga 2') !!}
+                        {!! Form::label('price_second', 'Harga Jual 2') !!}
                         {!! Form::number('price_second', null, ['class' => 'form-control']) !!}
                         <span class="text-danger">{!! $errors->first('price_second') !!}</span>
                     </div>

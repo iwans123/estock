@@ -39,12 +39,12 @@ class ItemController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
-            'code' => 'required|max:6|unique:items,code',
+            'code' => 'required|max:9|unique:items,code',
             'name' => 'required|max:255',
             'part_number' => 'nullable|max:255|unique:items,part_number',
             'category_id' => 'required',
             'price_code' => 'nullable|max:255',
-            'price_first' => 'nullable|numeric|min:0',
+            'price_first' => 'required|numeric|min:0',
             'price_second' => 'nullable|numeric|min:0',
             'description' => 'nullable|max:255',
         ]);
