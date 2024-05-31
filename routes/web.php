@@ -30,6 +30,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::middleware('auth')->get('/timeout', function () {
+    return view('layouts.guest_adminkit');
+});
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -42,7 +46,7 @@ Route::middleware(['auth', 'userAdmin'])->group(function () {
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'ensureTime')->group(function () {
     Route::controller(ItemController::class)->prefix('item')->middleware('role:admin|toko-1')->group(function () {
         Route::get('', 'index')->name('item.index');
         Route::get('create', 'create')->name('item.create');
