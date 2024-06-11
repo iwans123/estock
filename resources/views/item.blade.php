@@ -27,64 +27,66 @@
                             {!! Form::close() !!}
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Kode Barang</th>
-                                    <th scope="col">Nama Barang</th>
-                                    <th scope="col">Nomor Part</th>
-                                    <th scope="col">Kategori</th>
-                                    <th scope="col">Harga 1</th>
-                                    <th scope="col">Harga 2</th>
-                                    <th scope="col">Deskripsi</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $counter = 1;
-                                @endphp
-                                @foreach ($items as $item)
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
                                     <tr>
-                                        <th scope="row">{{ $counter++ }}</th>
-                                        <td>{!! DNS1D::getbarcodeHTML("$item->code", 'C39') !!}
-                                            p - {{ $item->code }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->part_number }}</td>
-                                        <td>{{ $item->category->name }}</td>
-                                        <td>
-                                            <div>
-                                                <div class="text-primary fw-bold">
-                                                    {{ formatRupiah($item->price_first, true) }}</div>
-                                                <div>L - {{ $item->price_code }}</div>
-                                            </div>
-                                            <span></span>
-                                            <span></span>
-                                        </td>
-                                        <td>{{ formatRupiah($item->price_second, true) }}</td>
-                                        <td>{{ $item->description }}</td>
-                                        <td>
-                                            <a href="{{ route('item.edit', $item->id) }}" class="btn btn-primary">Edit</a>
-                                            {{-- <form action="{{ route('item.destroy', $item->id) }}" method="POST"
-                                                style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Anda yakin ingin menghapus item ini?')">Hapus</button>
-                                            </form> --}}
-                                            <button class="btn btn-danger"
-                                                onclick="deletePost({{ $item->id }})">Hapus</button>
-                                        </td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Kode Barang</th>
+                                        <th scope="col">Nama Barang</th>
+                                        <th scope="col">Nomor Part</th>
+                                        <th scope="col">Kategori</th>
+                                        <th scope="col">Harga 1</th>
+                                        <th scope="col">Harga 2</th>
+                                        <th scope="col">Deskripsi</th>
+                                        <th scope="col">Aksi</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $counter = 1;
+                                    @endphp
+                                    @foreach ($items as $item)
+                                        <tr>
+                                            <th scope="row">{{ $counter++ }}</th>
+                                            <td>{!! DNS1D::getbarcodeHTML("$item->code", 'EAN13') !!}
+                                                p - {{ $item->code }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->part_number }}</td>
+                                            <td>{{ $item->category->name }}</td>
+                                            <td>
+                                                <div>
+                                                    <div class="text-primary fw-bold">
+                                                        {{ formatRupiah($item->price_first, true) }}</div>
+                                                    <div>L - {{ $item->price_code }}</div>
+                                                </div>
+                                                <span></span>
+                                                <span></span>
+                                            </td>
+                                            <td>{{ formatRupiah($item->price_second, true) }}</td>
+                                            <td>{{ $item->description }}</td>
+                                            <td>
+                                                <a href="{{ route('item.edit', $item->id) }}" class="btn btn-primary">Edit</a>
+                                                {{-- <form action="{{ route('item.destroy', $item->id) }}" method="POST"
+                                                    style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Anda yakin ingin menghapus item ini?')">Hapus</button>
+                                                </form> --}}
+                                                <button class="btn btn-danger"
+                                                    onclick="deletePost({{ $item->id }})">Hapus</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div>
+                    {{-- <div>
                         {{ $items->links() }}
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

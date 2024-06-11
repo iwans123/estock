@@ -24,51 +24,53 @@
                             {!! Form::close() !!}
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Kode Barang</th>
-                                    <th scope="col">Nama Barang</th>
-                                    <th scope="col">Nomor Part</th>
-                                    <th scope="col">Kategori</th>
-                                    <th scope="col">Stok</th>
-                                    <th scope="col">Status</th>
-                                    @hasrole('admin|toko-1')
-                                        <th scope="col">Aksi</th>
-                                    @endhasrole
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $counter = 1;
-                                @endphp
-                                @foreach ($stocks as $stock)
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
                                     <tr>
-                                        <th scope="row">{{ $counter++ }}</th>
-                                        <td>{{ $stock->item->code }}</td>
-                                        <td>{{ $stock->item->name }}</td>
-                                        <td>{{ $stock->item->part_number }}</td>
-                                        <td>{{ $stock->item->category->name }}</td>
-                                        <td>{{ $stock->stock }}</td>
-                                        <td><span
-                                                class="badge {{ $stock->status == 'aktif' ? 'bg-success' : 'bg-danger' }}">{{ $stock->status }}</span>
-                                        </td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Kode Barang</th>
+                                        <th scope="col">Nama Barang</th>
+                                        <th scope="col">Nomor Part</th>
+                                        <th scope="col">Kategori</th>
+                                        <th scope="col">Stok</th>
+                                        <th scope="col">Status</th>
                                         @hasrole('admin|toko-1')
-                                            <td>
-                                                @include('warehouse.receiving_modal')
-                                                @include('warehouse.transfer_modal')
-                                            </td>
+                                            <th scope="col">Aksi</th>
                                         @endhasrole
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $counter = 1;
+                                    @endphp
+                                    @foreach ($stocks as $stock)
+                                        <tr>
+                                            <th scope="row">{{ $counter++ }}</th>
+                                            <td>{{ $stock->item->code }}</td>
+                                            <td>{{ $stock->item->name }}</td>
+                                            <td>{{ $stock->item->part_number }}</td>
+                                            <td>{{ $stock->item->category->name }}</td>
+                                            <td>{{ $stock->stock }}</td>
+                                            <td><span
+                                                    class="badge {{ $stock->status == 'aktif' ? 'bg-success' : 'bg-danger' }}">{{ $stock->status }}</span>
+                                            </td>
+                                            @hasrole('admin|toko-1')
+                                                <td>
+                                                    @include('warehouse.receiving_modal')
+                                                    @include('warehouse.transfer_modal')
+                                                </td>
+                                            @endhasrole
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div>
+                    {{-- <div>
                         {{ $stocks->links() }}
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
