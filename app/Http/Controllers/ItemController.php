@@ -64,7 +64,6 @@ class ItemController extends Controller
         $stock_one->item_id = $item->id;
         $stock_one->position_id = '1';
         $stock_one->stock = '0';
-        $stock_one->status = 'aktif';
         $stock_one->save();
 
         $stock_two = new Stock();
@@ -111,7 +110,7 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'code' => 'required|max:6|unique:items,code,' . $id,
+            'code' => 'required|max:9|unique:items,code,' . $id,
             'name' => 'required|max:255',
             'part_number' => 'nullable|max:255|unique:items,part_number,' . $id,
             'category_id' => 'required',

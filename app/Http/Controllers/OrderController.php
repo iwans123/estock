@@ -65,6 +65,11 @@ class OrderController extends Controller
             $stock->item_id = $stock->item_id;
             $stock->stock = ($stock->stock - $data['quantity']);
             $stock->position_id = $stock->position_id;
+            if ($stock->stock > 0) {
+                $stock->status = 'aktif';
+            } else {
+                $stock->status = 'nonaktif';
+            }
             $stock->save();
         }
 

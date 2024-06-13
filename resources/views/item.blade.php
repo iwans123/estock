@@ -37,9 +37,9 @@
                                         <th scope="col">Nama Barang</th>
                                         <th scope="col">Nomor Part</th>
                                         <th scope="col">Kategori</th>
-                                        <th scope="col">Harga 1</th>
-                                        <th scope="col">Harga 2</th>
-                                        <th scope="col">Deskripsi</th>
+                                        <th scope="col">Harga</th>
+                                        {{-- <th scope="col">Harga 2</th> --}}
+                                        {{-- <th scope="col">Deskripsi</th> --}}
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -64,10 +64,13 @@
                                                 <span></span>
                                                 <span></span>
                                             </td>
-                                            <td>{{ formatRupiah($item->price_second, true) }}</td>
-                                            <td>{{ $item->description }}</td>
+                                            {{-- <td>{{ formatRupiah($item->price_second, true) }}</td>
+                                            <td>{{ $item->description }}</td> --}}
                                             <td>
-                                                <a href="{{ route('item.edit', $item->id) }}" class="btn btn-primary">Edit</a>
+                                                @include('item_detail')
+
+                                                <a href="{{ route('item.edit', $item->id) }}"
+                                                    class="btn btn-primary">Edit</a>
                                                 {{-- <form action="{{ route('item.destroy', $item->id) }}" method="POST"
                                                     style="display: inline-block;">
                                                     @csrf

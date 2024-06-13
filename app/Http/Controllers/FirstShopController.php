@@ -30,21 +30,28 @@ class FirstShopController extends Controller
         ]);
 
         $stock = Stock::findOrFail($id);
-        if ($request->status) {
+        $selisih_stock = $stock->stock - $request->quantity;
+        if ($request->stock) {
             // save stock
             $stock->item_id = $stock->item_id;
-            $stock->stock = $stock->stock + $data['quantity'];
+            $stock->stock = $stock->stock + $request->stock;
             $stock->position_id = $stock->position_id;
-            $stock->status = $request->status;
+            if ($stock->stock > 0) {
+                $stock->status = 'aktif';
+            }
             $stock->save();
 
-            return back()->with('success', 'Stok barang berhasil diubah!');
+            return back()->with('success', 'Stok barang berhasil dimasukkan!');
             // flash('Data berhasil dimasukkan')->success();
-        } elseif ($request->position == 'TOKO_2' && $stock->stock >= 1) {
+        } elseif ($request->position == 'TOKO_2' && $stock->stock >= 1 && $selisih_stock >= 0) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
             $stock->position_id = $stock->position_id;
-            $stock->status = $stock->status;
+            if ($stock->stock > 0) {
+                $stock->status = 'aktif';
+            } else {
+                $stock->status = 'nonaktif';
+            }
             $stock->save();
 
             $stock_two = Stock::where('item_id', $stock->item_id)->where('position_id', '2')->firstOrFail();
@@ -52,14 +59,23 @@ class FirstShopController extends Controller
             $stock_two->stock = $stock_two->stock + $data['quantity'];
             $stock_two->position_id = $stock_two->position_id;
             $stock_two->status = $stock_two->status;
+            if ($stock_two->stock > 0) {
+                $stock_two->status = 'aktif';
+            } else {
+                $stock_two->status = 'nonaktif';
+            }
             $stock_two->save();
 
             return back()->with('success', 'Stok barang berhasil ditransfer!');
-        } elseif ($request->position == 'GUDANG' && $stock->stock >= 1) {
+        } elseif ($request->position == 'GUDANG' && $stock->stock >= 1 && $selisih_stock >= 0) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
             $stock->position_id = $stock->position_id;
-            $stock->status = $stock->status;
+            if ($stock->stock > 0) {
+                $stock->status = 'aktif';
+            } else {
+                $stock->status = 'nonaktif';
+            }
             $stock->save();
 
             $stock_three = Stock::where('item_id', $stock->item_id)->where('position_id', '3')->firstOrFail();
@@ -67,6 +83,11 @@ class FirstShopController extends Controller
             $stock_three->stock = $stock_three->stock + $data['quantity'];
             $stock_three->position_id = $stock_three->position_id;
             $stock_three->status = $stock_three->status;
+            if ($stock_three->stock > 0) {
+                $stock_three->status = 'aktif';
+            } else {
+                $stock_three->status = 'nonaktif';
+            }
             $stock_three->save();
 
             return back()->with('success', 'Stok barang berhasil ditransfer!');

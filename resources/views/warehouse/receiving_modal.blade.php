@@ -23,17 +23,17 @@
                         'disabled' => 'disabled',
                     ]) !!}
                 </div>
-                <div class="form-group mb-2">
+                {{-- <div class="form-group mb-2">
                     {!! Form::label('status', 'Status') !!}
                     {!! Form::select('status', ['aktif' => 'Aktif', 'nonaktif' => 'Nonaktif'], null, [
                         'class' => 'form-control',
                         'placeholder' => 'Pilih status',
                         'required',
                     ]) !!}
-                </div>
+                </div> --}}
                 <div class="form-group mb-2">
                     {!! Form::label('quantity', 'quantity') !!}
-                    {!! Form::number('quantity', 0, [
+                    {!! Form::number('stock', null, [
                         'class' => 'form-control',
                         'placeholder' => 'Masukkan quantity',
                     ]) !!}

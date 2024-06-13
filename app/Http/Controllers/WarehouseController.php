@@ -30,40 +30,59 @@ class WarehouseController extends Controller
         ]);
 
         $stock = Stock::findOrFail($id);
-        if ($request->status) {
+        $selisih_stock = $stock->stock - $request->quantity;
+        if ($request->stock) {
             // save stock
             $stock->item_id = $stock->item_id;
-            $stock->stock = $stock->stock + $data['quantity'];
+            $stock->stock = $stock->stock + $request->stock;
             $stock->position_id = $stock->position_id;
-            $stock->status = $request->status;
+            if ($stock->stock > 0) {
+                $stock->status = 'aktif';
+            }
             $stock->save();
-            return back()->with('success', 'Stok barang berhasil diubah!');
-        } elseif ($request->position == 'TOKO_1' && $stock->stock >= 1) {
+            return back()->with('success', 'Stok barang berhasil dimasukkan!');
+        } elseif ($request->position == 'TOKO_1' && $stock->stock >= 1 && $selisih_stock >= 0) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
             $stock->position_id = $stock->position_id;
-            $stock->status = $stock->status;
+            if ($stock->stock > 0) {
+                $stock->status = 'aktif';
+            } else {
+                $stock->status = 'nonaktif';
+            }
             $stock->save();
 
             $stock_one = Stock::where('item_id', $stock->item_id)->where('position_id', '1')->firstOrFail();
             $stock_one->item_id = $stock_one->item_id;
             $stock_one->stock = $stock_one->stock + $data['quantity'];
             $stock_one->position_id = $stock_one->position_id;
-            $stock_one->status = $stock_one->status;
+            if ($stock_one->stock > 0) {
+                $stock_one->status = 'aktif';
+            } else {
+                $stock_one->status = 'nonaktif';
+            }
             $stock_one->save();
             return back()->with('success', 'Stok barang berhasil diubah!');
-        } elseif ($request->position == 'TOKO_2' && $stock->stock >= 1) {
+        } elseif ($request->position == 'TOKO_2' && $stock->stock >= 1 && $selisih_stock >= 0) {
             $stock->item_id = $stock->item_id;
             $stock->stock = $stock->stock - $data['quantity'];
             $stock->position_id = $stock->position_id;
-            $stock->status = $stock->status;
+            if ($stock->stock > 0) {
+                $stock->status = 'aktif';
+            } else {
+                $stock->status = 'nonaktif';
+            }
             $stock->save();
 
             $stock_two = Stock::where('item_id', $stock->item_id)->where('position_id', '2')->firstOrFail();
             $stock_two->item_id = $stock_two->item_id;
             $stock_two->stock = $stock_two->stock + $data['quantity'];
             $stock_two->position_id = $stock_two->position_id;
-            $stock_two->status = $stock_two->status;
+            if ($stock_two->stock > 0) {
+                $stock_two->status = 'aktif';
+            } else {
+                $stock_two->status = 'nonaktif';
+            }
             $stock_two->save();
             return back()->with('success', 'Stok barang berhasil diubah!');
         } else {

@@ -41,9 +41,9 @@
                                         <th scope="col">Kategori</th>
                                         <th scope="col">Stok</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Harga 1</th>
-                                        <th scope="col">Harga 2</th>
-                                        <th scope="col">Deskripsi</th>
+                                        <th scope="col">Harga</th>
+                                        {{-- <th scope="col">Harga 2</th>
+                                        <th scope="col">Deskripsi</th> --}}
                                         @hasrole('admin|toko-1')
                                             <th scope="col">Aksi</th>
                                         @endhasrole
@@ -64,11 +64,13 @@
                                             <td><span
                                                     class="badge {{ $stock->status == 'aktif' ? 'bg-success' : 'bg-danger' }}">{{ $stock->status }}</span>
                                             </td>
-                                            <td class="text-primary fw-bold">{{ formatRupiah($stock->item->price_first, true) }}
+                                            <td class="text-primary fw-bold">
+                                                {{ formatRupiah($stock->item->price_first, true) }}
                                             </td>
-                                            <td>{{ formatRupiah($stock->item->price_second, true) }}</td>
-                                            <td>{{ $stock->item->description }}</td>
+                                            {{-- <td>{{ formatRupiah($stock->item->price_second, true) }}</td>
+                                            <td>{{ $stock->item->description }}</td> --}}
                                             <td>
+                                                @include('first_shop.detail_modal')
                                                 @hasrole('admin|toko-1')
                                                     @include('first_shop.receiving_modal')
                                                     @include('first_shop.transfer_modal')
