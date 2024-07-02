@@ -10,6 +10,7 @@
                     <div class="mb-3 d-flex justify-content-between">
                         <div class="">
                             <a href="{{ route('item.create') }}" class="btn btn-primary">Tambah Item</a>
+                            <a href="{{ route('category.index') }}" class="btn btn-info">Kategori</a>
                         </div>
                         <div class="">
                             {!! Form::open(['route' => 'item.index', 'method' => 'GET']) !!}
@@ -64,9 +65,9 @@
                                                 <span></span>
                                                 <span></span>
                                             </td>
-                                            {{-- <td>{{ formatRupiah($item->price_second, true) }}</td>
-                                            <td>{{ $item->description }}</td> --}}
                                             <td>
+                                                <a href="{{ route('item.generateBarcode', $item->id) }}"
+                                                    class="btn btn-success">Print</a>
                                                 @include('item_detail')
 
                                                 <a href="{{ route('item.edit', $item->id) }}"

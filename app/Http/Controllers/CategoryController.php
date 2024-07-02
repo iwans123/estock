@@ -12,7 +12,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('category.index', [
+            "categories" => Category::latest()->get(),
+        ]);
     }
 
     /**
@@ -20,7 +22,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -28,7 +29,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:20|unique:categories,name'
+        ]);
+
+        $category = new Category();
+        $category->name = strtoupper($data['name']);
+        $category->save();
+
+        return back()->with('success', 'Kategori berhasil ditambahkan!');
     }
 
     /**
@@ -50,9 +59,17 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:20|unique:categories,name,' . $id,
+        ]);
+
+        $category = Category::findOrFail($id);
+        $category->name = strtoupper($data['name']);
+        $category->save();
+
+        return back()->with('success', 'Kategori berhasil diubah!');
     }
 
     /**

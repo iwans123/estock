@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FirstShopController;
 use App\Http\Controllers\ItemController;
@@ -54,6 +55,13 @@ Route::middleware('auth', 'ensureTime')->group(function () {
         Route::get('edit/{id}', 'edit')->name('item.edit');
         Route::put('update/{id}', 'update')->name('item.update');
         Route::get('delete/{id}', 'destroy')->name('item.destroy');
+        Route::get('generateBarcode/{id}', 'generateBarcode')->name('item.generateBarcode');
+    });
+    Route::controller(CategoryController::class)->prefix('category')->middleware('role:admin|toko-1')->group(function () {
+        Route::get('', 'index')->name('category.index');
+        Route::post('store', 'store')->name('category.store');
+        Route::put('update/{id}', 'update')->name('category.update');
+        Route::get('delete/{id}', 'destroy')->name('category.destroy');
     });
     Route::resource('first-shop', FirstShopController::class);
     Route::resource('second-shop', SecondShopController::class);

@@ -8,11 +8,11 @@
 
                 <div class="card-body">
                     <div class="mb-3 d-flex justify-content-between">
-                        @hasrole('admin|toko-1')
+                        {{-- @hasrole('admin|toko-1')
                             <div class="">
                                 <a href="{{ route('item.create') }}" class="btn btn-primary">Tambah Item</a>
                             </div>
-                        @endhasrole
+                        @endhasrole --}}
                         <div class="">
                             {!! Form::open(['route' => 'first-shop.index', 'method' => 'GET']) !!}
                             <div class="input-group">

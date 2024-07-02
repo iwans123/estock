@@ -25,16 +25,19 @@
     {{-- chart --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
+
         .table-container {
             display: flex;
             flex-direction: column;
             height: 100vh;
         }
+
         .table-responsive {
             flex: 1;
             overflow-y: auto;
@@ -44,7 +47,7 @@
 
 <body>
     <div class="wrapper">
-        <nav id="sidebar" class="sidebar js-sidebar collapsed">
+        <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand">
                     <span class="align-middle">e-Stock</span>

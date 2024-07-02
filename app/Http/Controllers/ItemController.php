@@ -5,8 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Stock;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Rule;
+use Mike42\Escpos\CapabilityProfile;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
+use Milon\Barcode\DNS1D;
+use PDF;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 
 class ItemController extends Controller
 {
@@ -147,5 +154,48 @@ class ItemController extends Controller
         Item::find($id)->delete();
 
         return back()->with('success', 'Data barang berhasil dihapus!');
+    }
+
+    public function generateBarcode($id)
+    {
+        $item = Item::find($id);
+        // $d = new DNS1D();
+        // $barcode = $d->getBarcodePNG("123456789", "C39");
+        // $data = [
+        //     'barcode' => $d->getBarcodeHTML("123456789", 'C39+', 3, 33)
+        // ];
+        $customPaper = array(0, 0, 400, 350);
+        $pdf = FacadePdf::loadView('pdf.barcode', compact('item'));
+        $pdf->setPaper($customPaper, 'potrait');
+        return $pdf->stream('download.pdf');
+    }
+
+    public function printBarcode()
+    {
+        // Buat barcode
+        $d = new DNS1D();
+        $barcode = $d->getBarcodePNG("123456789", "C39");
+
+        $profile = CapabilityProfile::load("simple");
+        // Lokasi dan nama printer Anda
+        $connector = new WindowsPrintConnector("thermalPrinter");
+
+        $printer = new Printer($connector, $profile);
+
+        // Cetak teks
+        $printer->text("Barcode Test\n");
+
+        // Cetak barcode
+        $printer->setBarcodeHeight(30);
+        $printer->barcode("123456789", Printer::BARCODE_CODE39);
+
+        // Potong kertas (optional)
+        // $printer->cut();
+
+        // Tutup koneksi printer
+        $printer->close();
+
+
+        return back()->with('success', 'Data berhasil diprint!');
     }
 }
