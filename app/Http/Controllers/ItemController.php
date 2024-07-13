@@ -7,13 +7,6 @@ use App\Models\Category;
 use App\Models\Stock;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
-use Illuminate\Http\Rule;
-use Mike42\Escpos\CapabilityProfile;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-use Mike42\Escpos\Printer;
-use Milon\Barcode\DNS1D;
-use PDF;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
 
 class ItemController extends Controller
 {
@@ -46,7 +39,7 @@ class ItemController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
-            'code' => 'required|max:9|unique:items,code',
+            'code' => 'required|max:20|unique:items,code',
             'name' => 'required|max:255',
             'part_number' => 'nullable|max:255|unique:items,part_number',
             'category_id' => 'required',
@@ -117,7 +110,7 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'code' => 'required|max:9|unique:items,code,' . $id,
+            'code' => 'required|max:20|unique:items,code,' . $id,
             'name' => 'required|max:255',
             'part_number' => 'nullable|max:255|unique:items,part_number,' . $id,
             'category_id' => 'required',
@@ -139,10 +132,10 @@ class ItemController extends Controller
         $item->save();
 
 
-        return back()->with('success', 'Data barang berhasil diubah!');
+        // return back()->with('success', 'Data barang berhasil diubah!');
         // Item::find($id)->update($validate);
 
-        // return redirect()->route('item')->with('success', 'Data barang berhasil diubah!');
+        return redirect()->route('item.index')->with('success', 'Data barang berhasil diubah!');
     }
 
     /**
@@ -170,32 +163,32 @@ class ItemController extends Controller
         return $pdf->stream('download.pdf');
     }
 
-    public function printBarcode()
-    {
-        // Buat barcode
-        $d = new DNS1D();
-        $barcode = $d->getBarcodePNG("123456789", "C39");
+    // public function printBarcode()
+    // {
+    //     // Buat barcode
+    //     $d = new DNS1D();
+    //     $barcode = $d->getBarcodePNG("123456789", "C39");
 
-        $profile = CapabilityProfile::load("simple");
-        // Lokasi dan nama printer Anda
-        $connector = new WindowsPrintConnector("thermalPrinter");
+    //     $profile = CapabilityProfile::load("simple");
+    //     // Lokasi dan nama printer Anda
+    //     $connector = new WindowsPrintConnector("thermalPrinter");
 
-        $printer = new Printer($connector, $profile);
+    //     $printer = new Printer($connector, $profile);
 
-        // Cetak teks
-        $printer->text("Barcode Test\n");
+    //     // Cetak teks
+    //     $printer->text("Barcode Test\n");
 
-        // Cetak barcode
-        $printer->setBarcodeHeight(30);
-        $printer->barcode("123456789", Printer::BARCODE_CODE39);
+    //     // Cetak barcode
+    //     $printer->setBarcodeHeight(30);
+    //     $printer->barcode("123456789", Printer::BARCODE_CODE39);
 
-        // Potong kertas (optional)
-        // $printer->cut();
+    //     // Potong kertas (optional)
+    //     // $printer->cut();
 
-        // Tutup koneksi printer
-        $printer->close();
+    //     // Tutup koneksi printer
+    //     $printer->close();
 
 
-        return back()->with('success', 'Data berhasil diprint!');
-    }
+    //     return back()->with('success', 'Data berhasil diprint!');
+    // }
 }

@@ -51,7 +51,7 @@
                                     @foreach ($items as $item)
                                         <tr>
                                             <th scope="row">{{ $counter++ }}</th>
-                                            <td>{!! DNS1D::getbarcodeHTML("$item->code", 'EAN13') !!}
+                                            <td>{!! DNS1D::getbarcodeHTML("$item->code", 'C39') !!}
                                                 p - {{ $item->code }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->part_number }}</td>

@@ -13,7 +13,6 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravelcollective/html": "^6.4",
-        "mike42/escpos-php": "^4.0",
         "milon/barcode": "^11.0",
         "spatie/laravel-permission": "^6.7"
     },
