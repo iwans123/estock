@@ -29,4 +29,24 @@ class Item extends Model
                 ->orWhere('part_number', 'like', "%$search%");
         });
     }
+
+    public static function generatePartNumber($prefix)
+    {
+        // Ambil part number terakhir dengan prefix yang diberikan
+        $lastPartNumber = self::where('code', 'LIKE', $prefix . '-%')
+            ->orderByRaw('CAST(RIGHT(code, 3) AS UNSIGNED) DESC')
+            ->first();
+
+        if ($lastPartNumber) {
+            // Ambil angka terakhir dari part number dan increment
+            $lastNumber = (int) substr($lastPartNumber->code, strrpos($lastPartNumber->code, '-') + 1);
+            $newNumber = $lastNumber + 1;
+        } else {
+            // Jika tidak ada part number dengan prefix tersebut, mulai dari 1
+            $newNumber = 1;
+        }
+
+        // Format part number baru
+        return $prefix . '-' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+    }
 }

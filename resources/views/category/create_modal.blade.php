@@ -20,6 +20,13 @@
                         'placeholder' => 'Masukkan Kategori',
                     ]) !!}
                 </div>
+                <div class="form-group mb-2">
+                    {!! Form::label('code_category', 'Kode Kategori') !!}
+                    {!! Form::text('code_category', null, [
+                        'class' => 'form-control',
+                        'placeholder' => 'Masukkan Kode Kategori',
+                    ]) !!}
+                </div>
             </div>
             <div class="modal-footer">
                 {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}

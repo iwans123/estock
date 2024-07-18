@@ -35,7 +35,8 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Kategori</th>
-                                        <th scope="col">Aksi</th>
+                                        <th scope="col">Kode Kategori</th>
+                                        {{-- <th scope="col">Aksi</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,10 +47,11 @@
                                         <tr>
                                             <th scope="row">{{ $counter++ }}</th>
                                             <td>{{ $category->name }}</td>
+                                            <td>{{ $category->code_category }}</td>
                                             <td>
                                                 {{-- <a href="{{ route('item.edit', $item->id) }}"
                                                     class="btn btn-primary">Edit</a> --}}
-                                                @include('category.edit_modal')
+                                                {{-- @include('category.edit_modal') --}}
                                                 {{-- <button class="btn btn-danger"
                                                     onclick="deletePost({{ $category->id }})">Hapus</button> --}}
                                             </td>

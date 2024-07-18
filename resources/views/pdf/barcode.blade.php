@@ -17,15 +17,14 @@
     {{-- --}}
     <table width="100%" style="margin: 0 auto;">
         <tr>
-            <td style="" class="text-center">
+            <td style="text-align: center">
                 <p style="font-size: 28px;font-weight: bold;">
                     {{ $item->name }}
-                    <span>({{ formatRupiah($item->price_first, true) }})</span>
 
                 </p>
-                {!! DNS1D::getbarcodeHTML($item->code, 'C39', 3, 200) !!}
-                <span style="font-size: 22px">{{ $item->code }}</span>
-
+                {!! DNS1D::getbarcodeHTML($item->code, 'C39', 3, 150) !!}
+                <h1 style="font-size: 24px;font-weight: bold;">{{ $item->code }}</h1>
+                <h1>({{ formatRupiah($item->price_first, true) }}) ({{ \Carbon\Carbon::now()->format('Y-m-d') }})</h1>
             </td>
         </tr>
     </table>

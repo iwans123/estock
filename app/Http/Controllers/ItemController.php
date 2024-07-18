@@ -39,18 +39,22 @@ class ItemController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
-            'code' => 'required|max:20|unique:items,code',
+            // 'code' => 'required|max:20|unique:items,code',
             'name' => 'required|max:255',
-            'part_number' => 'nullable|max:255|unique:items,part_number',
+            // 'brand' => 'required|max:20',
             'category_id' => 'required',
+            'part_number' => 'nullable|max:255|unique:items,part_number',
             'price_code' => 'nullable|max:255',
             'price_first' => 'required|numeric|min:0',
             'price_second' => 'nullable|numeric|min:0',
             'description' => 'nullable|max:255',
         ]);
+        $category = Category::find($data['category_id']);
+        $prefix = $category->code_category;
+        $code = Item::generatePartNumber($prefix);
 
         $item = new Item();
-        $item->code = $data['code'];
+        $item->code = $code;
         $item->name = $data['name'];
         $item->part_number = $data['part_number'];
         $item->category_id = $data['category_id'];
@@ -110,7 +114,7 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'code' => 'required|max:20|unique:items,code,' . $id,
+            // 'code' => 'required|max:20|unique:items,code,' . $id,
             'name' => 'required|max:255',
             'part_number' => 'nullable|max:255|unique:items,part_number,' . $id,
             'category_id' => 'required',
@@ -120,8 +124,20 @@ class ItemController extends Controller
             'description' => 'nullable|max:255',
         ]);
 
+        $category = Category::find($data['category_id']);
+        $prefix = $category->code_category;
+        $newCode = Item::generatePartNumber($prefix);
+
+        // $newCode = str_replace($item->category->code_category, $category->code_category, $item->code);
+
         $item = Item::findOrFail($id);
-        $item->code = $data['code'];
+
+        if ($item->category_id == $data['category_id']) {
+            $item->code = $item->code;
+        } else {
+            $item->code = $newCode;
+        }
+
         $item->name = $data['name'];
         $item->part_number = $data['part_number'];
         $item->category_id = $data['category_id'];

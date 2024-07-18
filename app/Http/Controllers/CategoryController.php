@@ -30,11 +30,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|max:20|unique:categories,name'
+            'name' => 'required|max:20|unique:categories,name',
+            'code_category' => 'required|max:20|unique:categories,code_category',
         ]);
 
         $category = new Category();
         $category->name = strtoupper($data['name']);
+        $category->code_category = strtoupper($data['code_category']);
         $category->save();
 
         return back()->with('success', 'Kategori berhasil ditambahkan!');
@@ -63,10 +65,12 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|max:20|unique:categories,name,' . $id,
+            'code_category' => 'required|max:20|unique:categories,code_category',
         ]);
 
         $category = Category::findOrFail($id);
         $category->name = strtoupper($data['name']);
+        $category->code_category = strtoupper($data['code_category']);
         $category->save();
 
         return back()->with('success', 'Kategori berhasil diubah!');

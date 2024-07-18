@@ -14,7 +14,7 @@
                         {!! Form::open(['route' => 'item.store']) !!}
                     @endif
 
-                    <div class="form-group mb-2">
+                    {{-- <div class="form-group mb-2">
                         {!! Form::label('code', 'Kode Barang') !!}
                         <span class="text-danger">*</span>
                         {!! Form::text('code', null, [
@@ -24,7 +24,7 @@
                             'placeholder' => 'Masukkan kode barang',
                         ]) !!}
                         <span class="text-danger">{!! $errors->first('code') !!}</span>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group mb-2">
                         {!! Form::label('name', 'Nama Barang') !!}
@@ -33,12 +33,13 @@
                         <span class="text-danger">{!! $errors->first('name') !!}</span>
                     </div>
 
-                    <div class="form-group mb-2">
-                        {!! Form::label('part_number', 'Part Number') !!}
-                        {!! Form::text('part_number', null, ['class' => 'form-control', 'placeholder' => 'Masukkan part number']) !!}
-                        <span class="text-danger">{!! $errors->first('part_number') !!}</span>
-                    </div>
-
+                    @if (!isset($item))
+                        {{-- <div class="form-group mb-2">
+                            {!! Form::label('brand', 'Merek Barang') !!}
+                            <span class="text-danger">*</span>
+                            {!! Form::text('brand', null, ['class' => 'form-control', 'required', 'placeholder' => 'Masukkan merek barang']) !!}
+                        </div> --}}
+                    @endif
                     <div class="form-group form-inline mb-2">
                         {!! Form::label('category_id', 'Kategori') !!}
                         <span class="text-danger">*</span>
@@ -55,6 +56,14 @@
                         <span>
                         </span>
                         <span class="text-danger">{!! $errors->first('category_id') !!}</span>
+                    </div>
+
+
+
+                    <div class="form-group mb-2">
+                        {!! Form::label('part_number', 'Part Number') !!}
+                        {!! Form::text('part_number', null, ['class' => 'form-control', 'placeholder' => 'Masukkan part number']) !!}
+                        <span class="text-danger">{!! $errors->first('part_number') !!}</span>
                     </div>
 
                     <div class="form-group mb-2">

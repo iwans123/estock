@@ -13,11 +13,13 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
         \App\Models\Category::create([
-            'name'    => 'oli',
+            'name'    => 'OLI',
+            'code_category' => 'OLI'
         ]);
 
         \App\Models\Category::create([
-            'name'    => 'ban',
+            'name'    => 'BAN LUAR',
+            'code_category' => 'BL'
         ]);
     }
 }
