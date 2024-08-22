@@ -88,9 +88,9 @@
                             </table>
                         </div>
                     </div>
-                    {{-- <div>
+                    <div>
                         {{ $items->links() }}
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>

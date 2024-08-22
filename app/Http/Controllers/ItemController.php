@@ -18,7 +18,10 @@ class ItemController extends Controller
         $search = $request->input('search');
 
         return view('item', [
-            "items" => Item::filter($search)->latest()->get(),
+            "items" => Item::filter($search)
+                ->latest()
+                ->paginate(100)
+                ->appends(['search' => $search]),
         ]);
     }
 

@@ -77,9 +77,9 @@
                             </table>
                         </div>
                     </div>
-                    {{-- <div>
+                    <div>
                         {{ $stocks->links() }}
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>

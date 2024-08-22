@@ -16,7 +16,10 @@ class WarehouseController extends Controller
         $search = $request->input('search');
 
         return view('warehouse.index', [
-            "stocks" => Stock::searchByPositionAndItemName($positionId, $search)->latest()->paginate(10),
+            "stocks" => Stock::searchByPositionAndItemName($positionId, $search)
+                ->latest()
+                ->paginate(100)
+                ->appends(['search' => $search]),
         ]);
     }
 

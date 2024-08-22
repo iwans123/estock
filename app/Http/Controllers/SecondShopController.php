@@ -16,7 +16,10 @@ class SecondShopController extends Controller
         $search = $request->input('search');
 
         return view('second_shop.index', [
-            "stocks" => Stock::searchByPositionAndItemName($positionId, $search)->latest()->get(),
+            "stocks" => Stock::searchByPositionAndItemName($positionId, $search)
+                ->latest()
+                ->paginate(100)
+                ->appends(['search' => $search]),
         ]);
     }
 
